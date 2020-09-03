@@ -31,10 +31,10 @@ func Test_getCep(t *testing.T) {
 	t.Run("valid cep", func(t *testing.T) {
 
 		id := "60170150"
-		cepJson, err := service.GetCep(id)
+		cepJSON, err := service.GetCep(id)
 		assert.Nil(t, err)
 		res := service.Cep{}
-		assert.Nil(t, json.Unmarshal([]byte(cepJson), &res))
+		assert.Nil(t, json.Unmarshal([]byte(cepJSON), &res))
 
 		assert.Equal(t, "60170-150", res.Cep)
 		assert.Equal(t, "Rua Vicente Leite", res.Logradouro)
