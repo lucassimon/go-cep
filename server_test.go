@@ -2,38 +2,38 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/eminetto/goCep/application/service"
+	"github.com/stretchr/testify/assert"
 )
 
-
-
 func removeCacheFile(t *testing.T, id string) {
-	assert.Nil(t, os.Remove(getCacheFilename(id)))
+	assert.Nil(t, os.Remove(service.GetCacheFilename(id)))
 }
 
 func Test_getCacheFilename(t *testing.T) {
-  id := "89201405"
-  idWithDash := "89201-405"
+	id := "89201405"
+	idWithDash := "89201-405"
 
-  assert.Equal(t, getCacheFilename(id), os.TempDir()+"/cep"+id)
-  assert.Equal(t, getCacheFilename(idWithDash), os.TempDir()+"/cep"+id)
+	assert.Equal(t, service.GetCacheFilename(id), os.TempDir()+"/cep"+id)
+	assert.Equal(t, service.GetCacheFilename(idWithDash), os.TempDir()+"/cep"+id)
 }
 
 func Test_getCep(t *testing.T) {
 	t.Run("invalid cep", func(t *testing.T) {
 		id := "0000000"
-		wrongCep, err := getCep(id)
+		wrongCep, err := service.GetCep(id)
 		assert.Equal(t, "", wrongCep)
 		assert.Error(t, err)
 	})
 	t.Run("valid cep", func(t *testing.T) {
 
 		id := "60170150"
-		cepJson, err := getCep(id)
+		cepJson, err := service.GetCep(id)
 		assert.Nil(t, err)
-		res := Cep{}
+		res := service.Cep{}
 		assert.Nil(t, json.Unmarshal([]byte(cepJson), &res))
 
 		assert.Equal(t, "60170-150", res.Cep)
@@ -52,9 +52,9 @@ func Test_getCep(t *testing.T) {
 
 func Test_Cache(t *testing.T) {
 	id := "89201405"
-	_, err := getCep(id) // Add to temporary_directory_path/cep89201405
+	_, err := service.GetCep(id) // Add to temporary_directory_path/cep89201405
 	assert.Nil(t, err)
-	_, err = os.Stat(getCacheFilename(id))
+	_, err = os.Stat(service.GetCacheFilename(id))
 	assert.Nil(t, err)
-	removeCacheFile(t,id)
+	removeCacheFile(t, id)
 }
