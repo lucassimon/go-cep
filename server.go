@@ -4,9 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/gorilla/context"
-	"github.com/gorilla/mux"
-	"github.com/ryanuber/go-filecache"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -14,21 +11,25 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gorilla/context"
+	"github.com/gorilla/mux"
+	"github.com/ryanuber/go-filecache"
 )
 
-const serverPort = "3000";
-const cacheTime = 500;
+const serverPort = "3000"
+const cacheTime = 500
 
 type Cep struct {
-	Cep string `json:"cep"`
-	Logradouro string `json:"logradouro"`
+	Cep         string `json:"cep"`
+	Logradouro  string `json:"logradouro"`
 	Complemento string `json:"complemento"`
-	Bairro string `json:"bairro"`
-	Localidade string `json:"localidade"`
-	Uf string `json:"uf"`
-	Unidade string `json:"unidade"`
-	Ibge string `json:"ibge"`
-	Gia string `json:"gia"`
+	Bairro      string `json:"bairro"`
+	Localidade  string `json:"localidade"`
+	Uf          string `json:"uf"`
+	Unidade     string `json:"unidade"`
+	Ibge        string `json:"ibge"`
+	Gia         string `json:"gia"`
 }
 
 func main() {
@@ -45,7 +46,11 @@ func main() {
 	router.HandleFunc("/cep/{id}", func(rw http.ResponseWriter, req *http.Request) {
 		vars := mux.Vars(req)
 		rw.Header().Set("Content-Type", "application/json")
-		cep, err := getCep(vars["id"])
+
+		cepClear := strings.ReplaceAll(vars["id"], "-", "")
+		cepClear = strings.ReplaceAll(cepClear, ".", "")
+
+		cep, err := getCep(cepClear)
 		if err != nil {
 			respondWithError(rw, http.StatusUnauthorized, err.Error(), errorMessage)
 			return
@@ -61,7 +66,7 @@ func main() {
 	srv := &http.Server{
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,
-		Addr:         ":"+serverPort,
+		Addr:         ":" + serverPort,
 		Handler:      context.ClearHandler(http.DefaultServeMux),
 		ErrorLog:     logger,
 	}
@@ -136,7 +141,7 @@ func saveOnCache(id string, content string) string {
 }
 
 func getCacheFilename(id string) string {
-  return os.TempDir()+"/cep"+strings.Replace(id, "-", "", -1)
+	return os.TempDir() + "/cep" + strings.Replace(id, "-", "", -1)
 }
 
 //RespondWithError return a http error
