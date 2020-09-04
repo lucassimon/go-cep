@@ -8,10 +8,13 @@ import (
 	"time"
 
 	"github.com/gorilla/context"
+	"github.com/joho/godotenv"
 	"github.com/tayron/go-cep/application/config"
 )
 
-const serverPort = "3000"
+func init() {
+	godotenv.Load()
+}
 
 func main() {
 
@@ -22,12 +25,12 @@ func main() {
 	srv := &http.Server{
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,
-		Addr:         ":" + serverPort,
+		Addr:         ":" + os.Getenv("LOCALHOST_PORT"),
 		Handler:      context.ClearHandler(http.DefaultServeMux),
 		ErrorLog:     logger,
 	}
 
-	fmt.Println("Servidor executando no endereço: http://127.0.0.1:" + serverPort)
+	fmt.Println("Servidor executando no endereço: http://127.0.0.1:" + os.Getenv("LOCALHOST_PORT"))
 	err := srv.ListenAndServe()
 	if err != nil {
 		panic(err)
