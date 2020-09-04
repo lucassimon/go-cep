@@ -5,15 +5,26 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/gorilla/context"
 	"github.com/joho/godotenv"
 	"github.com/tayron/go-cep/application/config"
+	"github.com/tayron/go-cep/application/util"
 )
 
 func init() {
-	godotenv.Load()
+	caminhoAplicacao := util.ObterCaminhoDiretorioAplicacao()
+
+	environmentPath := filepath.Join(caminhoAplicacao, ".env")
+
+	fmt.Println("Arquivo de configuração: " + environmentPath)
+	err := godotenv.Load(environmentPath)
+
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
