@@ -1,4 +1,4 @@
-module github.com/eminetto/goCep
+module github.com/tayron/go-cep
 
 go 1.13
 

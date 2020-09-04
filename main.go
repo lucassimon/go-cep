@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/eminetto/goCep/application/service"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
+	"github.com/tayron/go-cep/application/service"
 )
 
 const serverPort = "3000"
@@ -54,6 +55,8 @@ func main() {
 		Handler:      context.ClearHandler(http.DefaultServeMux),
 		ErrorLog:     logger,
 	}
+
+	fmt.Println("Servidor executando no endereço: http://127.0.0.1:" + serverPort)
 	err := srv.ListenAndServe()
 	if err != nil {
 		panic(err)

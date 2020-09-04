@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/eminetto/goCep/application/service"
+	"github.com/tayron/go-cep/application/service"
 	"github.com/stretchr/testify/assert"
 )
 
