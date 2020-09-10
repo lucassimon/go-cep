@@ -41,16 +41,16 @@ GO-CEP - Serviço de consulta de endereço por CEP
    CGroup: /system.slice/go-cep.service
            └─3296 /usr/local/gocep/go-cep
 
-set 04 10:48:55 constance-IPMH110G-DDR3 systemd[1]: Started go-cep.service.
+set 04 10:48:55 tayron-IPMH110G-DDR3 systemd[1]: Started go-cep.service.
 
 Fim da instalação, em caso de problema execute o comando: [ journalctl -u go-cep -f ] para mais detalhes
 ```
 Ao executar o comando *journalctl -u go-cep -f* verá em qual endereço e porta a aplicação está acessível
 
 ```
-set 04 10:48:55 constance-IPMH110G-DDR3 systemd[1]: Started go-cep.service.
-set 04 10:48:55 constance-IPMH110G-DDR3 go-cep[3296]: Arquivo de configuração: /usr/local/gocep/.env
-set 04 10:48:55 constance-IPMH110G-DDR3 go-cep[3296]: Servidor executando no endereço: http://127.0.0.1:3003
+set 04 10:48:55 tayron-IPMH110G-DDR3 systemd[1]: Started go-cep.service.
+set 04 10:48:55 tayron-IPMH110G-DDR3 go-cep[3296]: Arquivo de configuração: /usr/local/gocep/.env
+set 04 10:48:55 tayron-IPMH110G-DDR3 go-cep[3296]: Servidor executando no endereço: http://127.0.0.1:3003
 ```
 
 Conforme o log a aplicação está sendo executada no endereço: ```http://127.0.0.1:3003```
