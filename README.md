@@ -1,5 +1,5 @@
 # GO CEP
-API em Golang para consulta de endereço através de CEP, 
+API desenvolvida em Golang para consulta de endereço através de CEP, 
 muito utilizado em sistemas que preenche automaticamente 
 os campos referente à endereço ao informar o CEP.
 
